@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Insight Bot — AI Damage Analysis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css"/>
+</head>
+<body>
+  <div class="app">
+
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">IB</div>
+        <div class="brand-text">
+          <div class="brand-name">Insight Bot</div>
+          <div class="brand-tag">Damage Intelligence</div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <div class="nav-label">Workspace</div>
+        <button class="nav-item active" data-tab="raise">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+          <span>Raise Report</span>
+        </button>
+        <button class="nav-item" data-tab="track">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <span>Track Report</span>
+        </button>
+        <button class="nav-item" data-tab="warranty">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>Claim Warranty</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="status">
+          <span class="dot"></span>
+          <span>All systems operational</span>
+        </div>
+        <div class="version">v1.0.0</div>
+      </div>
+    </aside>
+
+    <main class="main">
+
+      <header class="topbar">
+        <div>
+          <h1 id="page-title">Raise a Damage Report</h1>
+          <p id="page-subtitle" class="muted">Report damage detected on arrival</p>
+        </div>
+        <div class="topbar-actions">
+          <span class="pill">CRT Products Only</span>
+        </div>
+      </header>
+
+      <div class="content">
+
+        <section class="panel" id="panel-raise">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h3>Order Details</h3>
+                <p class="muted small">We'll validate the order and check CRT eligibility</p>
+              </div>
+            </div>
+            <div class="field">
+              <label for="raise-order">Order ID</label>
+              <input id="raise-order" placeholder="ORD-1001" autocomplete="off"/>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h3>Your Feedback</h3>
+                <p class="muted small">Describe the issue in your own words</p>
+              </div>
+            </div>
+            <div class="field">
+              <textarea id="raise-feedback" rows="4" placeholder="The shoe I bought has torn severely and looks damaged..."></textarea>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h3>Damage Image</h3>
+                <p class="muted small">Upload a clear photo of the damage</p>
+              </div>
+            </div>
+            <label class="dropzone" for="raise-image">
+              <input id="raise-image" type="file" accept="image/*" hidden/>
+              <div class="dropzone-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="17 8 12 3 7 8"/>
+                  <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+              </div>
+              <div class="dropzone-title">Click to upload or drag &amp; drop</div>
+              <div class="dropzone-hint">PNG, JPG up to 10MB</div>
+              <div class="dropzone-file" id="raise-file-name"></div>
+            </label>
+          </div>
+
+          <div class="actions">
+            <button id="raise-submit" class="btn primary">
+              <span class="btn-label">Submit Report</span>
+              <span class="spinner"></span>
+            </button>
+          </div>
+
+          <div class="result-card" id="raise-result"></div>
+        </section>
+
+        <section class="panel" id="panel-track" hidden>
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h3>Track Your Report</h3>
+                <p class="muted small">Enter the tracking ID you received</p>
+              </div>
+            </div>
+            <div class="field">
+              <label for="track-id">Tracking ID</label>
+              <input id="track-id" placeholder="e.g. RPT-A3K9M2" autocomplete="off"/>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button id="track-submit" class="btn primary">
+              <span class="btn-label">Fetch Report</span>
+              <span class="spinner"></span>
+            </button>
+          </div>
+
+          <div class="result-card" id="track-result"></div>
+        </section>
+
+        <section class="panel" id="panel-warranty" hidden>
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h3>Order Details</h3>
+                <p class="muted small">We'll verify your warranty status and coverage</p>
+              </div>
+            </div>
+            <div class="field">
+              <label for="warranty-order">Order ID</label>
+              <input id="warranty-order" placeholder="ORD-1005" autocomplete="off"/>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h3>Damage Image</h3>
+                <p class="muted small">A clear photo helps us assess the damage</p>
+              </div>
+            </div>
+            <label class="dropzone" for="warranty-image">
+              <input id="warranty-image" type="file" accept="image/*" hidden/>
+              <div class="dropzone-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="17 8 12 3 7 8"/>
+                  <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+              </div>
+              <div class="dropzone-title">Click to upload or drag &amp; drop</div>
+              <div class="dropzone-hint">PNG, JPG up to 10MB</div>
+              <div class="dropzone-file" id="warranty-file-name"></div>
+            </label>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h3>Incident Description</h3>
+                <p class="muted small">Briefly describe how the damage occurred</p>
+              </div>
+            </div>
+            <div class="field">
+              <textarea id="warranty-reason" rows="3" placeholder="e.g. The laptop fell from the table..."></textarea>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button id="warranty-submit" class="btn primary">
+              <span class="btn-label">Submit Claim</span>
+              <span class="spinner"></span>
+            </button>
+          </div>
+
+          <div class="result-card" id="warranty-result"></div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="/static/js/app.js" defer></script>
+</body>
+</html>
